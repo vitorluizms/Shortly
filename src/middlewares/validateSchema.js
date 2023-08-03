@@ -9,7 +9,7 @@ export function validateSchema(schema) {
           errors += `${detail.message}\n`;
         else errors += detail.message;
       });
-      return res.status(400).send(errors);
+      return res.status(422).send(errors);
     }
 
     next();
