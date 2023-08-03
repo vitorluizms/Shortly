@@ -144,13 +144,18 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES (3, 'c3485938-54d7-438d-aa78-db3c37020b95', 2, '2023-08-03 12:19:44.243994');
+INSERT INTO public.sessions VALUES (4, '32665c31-5aef-4381-b734-5b0aa1b0be7b', 2, '2023-08-03 13:00:21.528258');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 2, 'Yfj9fv8RAn', 'https://www.youtube.com/watch?v=Z-wH0_RYbUs', 0, '2023-08-03 13:38:43.971366');
+INSERT INTO public.urls VALUES (2, 2, 'MzTU0p_INy', 'https://www.youtube.com/watch?v=Z-wH0_RYbUs', 0, '2023-08-03 13:39:09.272469');
+INSERT INTO public.urls VALUES (3, 2, '4oRAU-fv6o', 'https://www.youtube.com/watch?v=Z-wH0_RYbUs', 0, '2023-08-03 13:42:29.49033');
+INSERT INTO public.urls VALUES (4, 2, 'fFRdCEiOVC', 'https://www.youtube.com/watch?v=Z-wH0_RYbUs', 0, '2023-08-03 13:42:55.030783');
+INSERT INTO public.urls VALUES (5, 2, 'BWRlWjA-4G', 'https://www.youtube.com/watch?v=Z-wH0_RYbU', 0, '2023-08-03 13:46:00.253644');
 
 
 --
@@ -165,14 +170,14 @@ INSERT INTO public.users VALUES (2, 'vitor', 'vitorl@hotmail.com', '$2b$10$AmyKt
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 3, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 4, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 5, true);
 
 
 --
