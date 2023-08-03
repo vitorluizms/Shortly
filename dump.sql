@@ -27,7 +27,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.sessions (
     id integer NOT NULL,
     token text NOT NULL,
-    "userId" integer NOT NULL
+    "userId" integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -60,7 +61,8 @@ CREATE TABLE public.urls (
     "userId" integer NOT NULL,
     "shortUrl" text NOT NULL,
     url text NOT NULL,
-    "visitCount" integer DEFAULT 0 NOT NULL
+    "visitCount" integer DEFAULT 0 NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -92,7 +94,8 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name text NOT NULL,
     email text NOT NULL,
-    password text NOT NULL
+    password text NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -141,7 +144,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES (3, 'c3485938-54d7-438d-aa78-db3c37020b95', 2);
+INSERT INTO public.sessions VALUES (3, 'c3485938-54d7-438d-aa78-db3c37020b95', 2, '2023-08-03 12:19:44.243994');
 
 
 --
@@ -154,8 +157,8 @@ INSERT INTO public.sessions VALUES (3, 'c3485938-54d7-438d-aa78-db3c37020b95', 2
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'vitor', 'vitor@hotmail.com', 'novo');
-INSERT INTO public.users VALUES (2, 'vitor', 'vitorl@hotmail.com', '$2b$10$AmyKt2RckOzicEb5JE2Xh.Wjaxyd0fGGuzbTckV6EK1yhhS3vVive');
+INSERT INTO public.users VALUES (1, 'vitor', 'vitor@hotmail.com', 'novo', '2023-08-03 12:20:39.835553');
+INSERT INTO public.users VALUES (2, 'vitor', 'vitorl@hotmail.com', '$2b$10$AmyKt2RckOzicEb5JE2Xh.Wjaxyd0fGGuzbTckV6EK1yhhS3vVive', '2023-08-03 12:20:39.835553');
 
 
 --
