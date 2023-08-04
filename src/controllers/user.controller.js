@@ -36,7 +36,9 @@ export async function signIn(req, res) {
       return res.status(401).send(userValid.rows);
 
     const token = uuid();
-    await db.query(`DELETE FROM sessions WHERE "userId" = $1;`, [userValid.rows[0].id])
+    await db.query(`DELETE FROM sessions WHERE "userId" = $1;`, [
+      userValid.rows[0].id,
+    ]);
     await db.query(`INSERT INTO sessions ("userId", token) VALUES ($1, $2);`, [
       userValid.rows[0].id,
       token,

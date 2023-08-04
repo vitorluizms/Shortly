@@ -14,7 +14,7 @@ export async function getAllUrlsByUser(req, res) {
       FROM users
       JOIN urls ON urls."userId" = users.id
       WHERE users.id = $1
-      GROUP BY users.id`,
+      GROUP BY users.id;`,
       [user.userId]
     );
     res.send(promise.rows[0]);
@@ -23,4 +23,19 @@ export async function getAllUrlsByUser(req, res) {
   }
 }
 
-export async function getUrlsRank(req, res) {}
+export async function getUrlsRank(req, res) {
+  try {
+    const promise = await db.query(`
+    SELECT users.id, users.name, 
+      COUNT(urls."userId") AS "linksCount", SUM(urls."visitCount") AS "visitCount"
+      FROM users
+      LEFT JOIN urls ON urls."userId" = users.id
+      GROUP BY users.id
+      ORDER BY "visitCount" DESC
+      LIMIT 10;`);
+
+    res.status(200).send(promise.rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}

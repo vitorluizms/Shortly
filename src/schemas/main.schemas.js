@@ -13,8 +13,5 @@ export const signInSchema = joi.object({
 });
 
 export const urlSchema = joi.object({
-  url: joi
-    .string()
-    .pattern(new RegExp('^https?://'))
-    .required(),
+  url: joi.string().pattern(new RegExp("^https?://")).required(),
 });
