@@ -14,6 +14,6 @@ const urlRouter = Router();
 urlRouter.post("/urls/shorten", validateAuth, validateSchema(urlSchema), shortenUrl);
 urlRouter.get("/urls/:id", getUrlById);
 urlRouter.get("/urls/open/:shortUrl", redirectUser);
-urlRouter.delete("urls/:id", validateAuth, deleteUrl);
+urlRouter.delete("/urls/:id", validateAuth, deleteUrl);
 
 export default urlRouter;
