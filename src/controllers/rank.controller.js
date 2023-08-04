@@ -10,7 +10,7 @@ export async function getAllUrlsByUser(req, res) {
         'shortUrl', urls."shortUrl",
         'url', urls.url,
         'visitCount', urls."visitCount"
-      ) ORDER BY urls.id) AS shortenedUrls
+      ) ORDER BY urls.id) AS "shortenedUrls"
       FROM users
       JOIN urls ON urls."userId" = users.id
       WHERE users.id = $1
