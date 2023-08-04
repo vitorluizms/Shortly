@@ -15,6 +15,6 @@ export const signInSchema = joi.object({
 export const urlSchema = joi.object({
   url: joi
     .string()
-    .uri({ scheme: ["https"] })
+    .uri({ scheme: ["https, http"] })
     .required(),
 });
