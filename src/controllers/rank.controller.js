@@ -1,22 +1,10 @@
 import db from "../database/database.connection.js";
+import { getRank, getUrlsUser } from "../repositories/url.repository.js";
 
 export async function getAllUrlsByUser(req, res) {
   const { user } = res.locals;
   try {
-    const promise = await db.query(
-      `SELECT users.id, users.name, SUM(urls."visitCount") AS "visitCount",
-      JSON_AGG(JSON_BUILD_OBJECT(
-        'id', urls.id,
-        'shortUrl', urls."shortUrl",
-        'url', urls.url,
-        'visitCount', urls."visitCount"
-      ) ORDER BY urls.id) AS "shortenedUrls"
-      FROM users
-      JOIN urls ON urls."userId" = users.id
-      WHERE users.id = $1
-      GROUP BY users.id;`,
-      [user.userId]
-    );
+    const promise = await getUrlsUser(user);
     res.send(promise.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
@@ -25,14 +13,7 @@ export async function getAllUrlsByUser(req, res) {
 
 export async function getUrlsRank(req, res) {
   try {
-    const promise = await db.query(`
-    SELECT users.id, users.name, 
-      COUNT(urls."userId") AS "linksCount", SUM(urls."visitCount") AS "visitCount"
-      FROM users
-      LEFT JOIN urls ON urls."userId" = users.id
-      GROUP BY users.id
-      ORDER BY "visitCount" DESC
-      LIMIT 10;`);
+    const promise = await getRank();
 
     res.status(200).send(promise.rows);
   } catch (err) {

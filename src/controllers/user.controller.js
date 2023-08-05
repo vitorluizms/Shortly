@@ -1,4 +1,3 @@
-import db from "../database/database.connection.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import {
@@ -31,7 +30,7 @@ export async function signIn(req, res) {
       userValid.rowCount === 0 ||
       !bcrypt.compareSync(password, userValid.rows[0].password)
     )
-      return res.status(401).send(userValid.rows);
+      return res.status(401).send("email or password invalid");
 
     const token = uuid();
     await deleteSessions(userValid);
