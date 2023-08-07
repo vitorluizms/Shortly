@@ -1,4 +1,4 @@
-import db from "../database/database.connection";
+import db from "../database/database.connection.js";
 
 export const validateUrl = (url, userId) => {
   const promise = db.query(
