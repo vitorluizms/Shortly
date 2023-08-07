@@ -1,36 +1,57 @@
-import db from "../database/database.connection.js";
+import db from "../database/database.connection";
 
-export const getUrlsUser = (user) => {
+export const validateUrl = (url, userId) => {
   const promise = db.query(
-    `SELECT users.id, users.name, COALESCE(SUM(urls."visitCount"), 0) AS "visitCount",
-        CASE 
-        WHEN COUNT(urls) > 0 THEN JSON_AGG(JSON_BUILD_OBJECT(
-            'id', urls.id,
-            'shortUrl', urls."shortUrl",
-            'url', urls.url,
-            'visitCount', urls."visitCount"
-          ) ORDER BY urls.id)
-        ELSE '[]'::json
-        END AS "shortenedUrls"
-        FROM users
-        LEFT JOIN urls ON urls."userId" = users.id
-        WHERE users.id = $1
-        GROUP BY users.id, users.name;`,
-    [user.userId]
+    `SELECT * FROM urls WHERE url = $1 AND "userId" = $2;`,
+    [url, userId]
   );
 
   return promise;
 };
 
-export const getRank = () => {
-  const promise = db.query(`
-    SELECT users.id, users.name, 
-      COUNT(urls."userId") AS "linksCount", COALESCE(SUM(urls."visitCount"), 0) AS "visitCount"
-      FROM users
-      LEFT JOIN urls ON urls."userId" = users.id
-      GROUP BY users.id
-      ORDER BY "visitCount" DESC
-      LIMIT 10;`);
+export const createUrl = (url, id, userId) => {
+  const promise = db.query(
+    `INSERT INTO urls (url, "shortUrl", "userId") VALUES ($1, $2, $3)
+        RETURNING id, "shortUrl";`,
+    [url, id, userId]
+  );
+
+  return promise;
+};
+
+export const getUserUrl = (id) => {
+  const promise = db.query(
+    `SELECT id, "shortUrl", url FROM urls WHERE id = $1;`,
+    [id]
+  );
+
+  return promise;
+};
+
+export const getUrl = (shortUrl) => {
+  const promise = db.query(`SELECT url, id FROM urls WHERE "shortUrl" = $1;`, [
+    shortUrl,
+  ]);
+
+  return promise;
+};
+
+export const updateUrlVisits = (url) => {
+  const promise = db.query(
+    `UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE id = $1;`,
+    [url.rows[0].id]
+  );
+  return promise;
+};
+
+export const validateUrlById = (id) => {
+  const promise = db.query(`SELECT * FROM urls WHERE id = $1`, [id]);
+
+  return promise;
+};
+
+export const deleteUrlQuery = (id) => {
+  const promise = db.query(`DELETE FROM urls WHERE id = $1;`, [id]);
 
   return promise;
 };

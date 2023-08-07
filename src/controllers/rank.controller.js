@@ -1,5 +1,4 @@
-import db from "../database/database.connection.js";
-import { getRank, getUrlsUser } from "../repositories/url.repository.js";
+import { getRank, getUrlsUser } from "../repositories/rank.repository.js";
 
 export async function getAllUrlsByUser(req, res) {
   const { user } = res.locals;
